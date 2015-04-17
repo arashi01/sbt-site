@@ -49,6 +49,25 @@ website. You can configure this by passing a parameter to the includeScaladoc me
     site.includeScaladoc("alternative/directory")
 
 
+### Scalate Site Generation
+The site plugin has direct support for generating [Scalate](scalate.github.io/scalate) projects.
+This assumes a Scalate project located under the `src/scalate-site` directory, with template files
+located in `src/scalate-site/app`, and supporting Scala, Java and resource files located in `src/scalate-site/scala`,
+`src/scalate-site/java` and `src/scalate-site/resources` respectively.
+
+To add Scalate support, add the following to your project build configuration:
+```scala
+site.includeScalate() // Note: 'includeScalate' also accepts an optional string parameter specifying Scalate a boot class name.
+```
+
+The following settings can be configured to customise Scalate site generation (assumes the import of `com.typesafe.sbt.site.ScalateSupport`):
+```scala
+libraryDependencies in ScalateSupport.ScalateSite  // Allows adding additional libraries to site generation classpath.
+sourceDirectory in ScalateSupport.ScalateSite // Allows changing the base source directory.
+scalateBootClass in ScalateSupport.ScalateSite // Allows specifying a Scalate template engine boot class name.
+```
+
+
 ### Jekyll site generation ###
 
 The site plugin has direct support for running jekyll locally.  This is suprisingly

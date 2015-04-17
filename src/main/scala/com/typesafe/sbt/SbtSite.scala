@@ -3,7 +3,7 @@ package com.typesafe.sbt
 import com.typesafe.sbt.site.site.AsciidoctorSupport
 import sbt._
 import Keys._
-import site.{ JekyllSupport, PamfletSupport, Preview, SphinxSupport, NanocSupport }
+import site.{ JekyllSupport, PamfletSupport, Preview, SphinxSupport, NanocSupport, ScalateSupport }
 
 
 object SbtSite extends Plugin {
@@ -60,6 +60,10 @@ object SbtSite extends Plugin {
       NanocSupport.settings() ++ Seq(addMappingsToSiteDir(mappings in NanocSupport.Nanoc, alias))
     def asciidoctorSupport(alias: String = ""): Seq[Setting[_]] =
       AsciidoctorSupport.settings ++ Seq(addMappingsToSiteDir(mappings in AsciidoctorSupport.Asciidoctor, alias))
+    def scalateSupport(alias: String = "", scalateBootClass: Option[String] = None) =
+      ScalateSupport.settings ++ Seq(
+        ScalateSupport.scalateBootClass := scalateBootClass,
+        addMappingsToSiteDir(mappings in (ScalateSupport.ScalateSite, ScalateSupport.scalateSite), alias))
     def publishSite(): SettingsDefinition = addArtifact(artifact in packageSite, packageSite)
   }
 
